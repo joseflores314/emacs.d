@@ -173,13 +173,13 @@ top level of the file.
 *** Flyspell configuration
 For all text based modes have flyspell running.
 #+begin_src emacs-lisp
-  (add-hook 'text-mode-hook #'flyspell-mode)
+  ; (add-hook 'text-mode-hook #'flyspell-mode)
 #+end_src
 For all programming modes having flyspell running would
 cause a lot of visual clutter, this makes it only check
 comments in code.
 #+begin_src emacs-lisp
-  (add-hook 'prog-mode-hook #'flyspell-prog-mode)
+  ; (add-hook 'prog-mode-hook #'flyspell-prog-mode)
 #+end_src
 *** Languages configuration
 #+begin_src emacs-lisp
