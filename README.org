@@ -58,7 +58,6 @@
   - [[#docker-file-configuration][Docker file configuration]]
   - [[#bazel-configuration][Bazel configuration]]
   - [[#terraform-configuration][Terraform configuration]]
-  - [[#kubernetes-configuration][Kubernetes configuration]]
   - [[#kubel-configuration][Kubel configuration]]
   - [[#vterm-configuration][Vterm configuration]]
   - [[#ripgrep-configuration][Ripgrep configuration]]
@@ -539,18 +538,6 @@ Add support for Terraform
   (use-package terraform-mode
     :ensure t
     :mode (rx ".tf" string-end))
-#+end_src
-** Kubernetes configuration
-Add configuration for Kubernetes
-#+begin_src emacs-lisp
-  (use-package kubernetes
-    :ensure t
-    :commands kubernetes-overview
-    :init
-    (fset 'k8s #'kubernetes-overview)
-    :config
-    (setq kubernetes-poll-frequency 3600
-	  kubernetes-redraw-frequency 3600))
 #+end_src
 ** Kubel configuration
 Alternative for when working with low k8s priviliges
