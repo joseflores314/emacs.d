@@ -617,14 +617,14 @@ As of now an experimental configuration to integrate tree-sitter to the
 configuration.
 #+begin_src emacs-lisp
   (use-package treesit
-    :mode (("\\.tsx\\'" . tsx-ts-mode)
-           ("\\.js\\'"  . typescript-ts-mode)
-           ("\\.mjs\\'" . typescript-ts-mode)
-           ("\\.mts\\'" . typescript-ts-mode)
-           ("\\.cjs\\'" . typescript-ts-mode)
-           ("\\.ts\\'"  . typescript-ts-mode)
-           ("\\.jsx\\'" . tsx-ts-mode)
-           ("\\.json\\'" .  json-ts-mode))
+    :mode (((rx ".tsx" string-end) . tsx-ts-mode)
+           ((rx ".js" string-end) . typescript-ts-mode)
+           ((rx ".mjs" string-end) . typescript-ts-mode)
+           ((rx ".mts" string-end) . typescript-ts-mode)
+           ((rx ".cjs" string-end) . typescript-ts-mode)
+           ((rx ".ts" string-end)  . typescript-ts-mode)
+           ((rx ".jsx" string-end) . tsx-ts-mode)
+           ((rx ".json" string-end) .  json-ts-mode))
     :preface
     (defun cfg/install-tree-grammars ()
       "Install tree sitter grammars if they are absent"
