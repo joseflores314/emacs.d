@@ -449,7 +449,7 @@ back-end to be used with lsp-mode.
     :hook ((prog-mode text-mode) . company-mode)
     :config
     (setq company-minimum-prefix-length 1
-	  company-idle-delay 0.0))
+  	company-idle-delay 0.2))
 #+end_src
 *** Company-prescient
 #+begin_src emacs-lisp
