@@ -632,7 +632,8 @@ configuration.
       (dolist (grammar
   	     '((javascript . ("https://github.com/tree-sitter/tree-sitter-javascript" "v0.25.0" "src"))
   	       (tsx . ("https://github.com/tree-sitter/tree-sitter-typescript" "v0.23.2" "tsx/src"))
-                 (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" "v0.23.2" "typescript/src"))))
+                 (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" "v0.23.2" "typescript/src"))
+  	       (json . ("https://github.com/tree-sitter/tree-sitter-json" "v0.24.8" "src"))))
       (add-to-list 'treesit-language-source-alist grammar)
       ;; I have to think if there is a better way to do this, unclear what happens if the grammar version is upgraded
       (unless (treesit-language-available-p (car grammar))
