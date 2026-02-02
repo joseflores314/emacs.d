@@ -54,7 +54,6 @@
   - [[#projectile-configuration][Projectile configuration]]
   - [[#pipenv-configuration][Pipenv configuration]]
   - [[#ranger-configuration][Ranger configuration]]
-  - [[#yaml-configuration][Yaml configuration]]
   - [[#docker-file-configuration][Docker file configuration]]
   - [[#bazel-configuration][Bazel configuration]]
   - [[#terraform-configuration][Terraform configuration]]
@@ -508,13 +507,6 @@ Ensure ranger is installed and bind it to ~C-x C-d~.
     (setq ranger-show-literal nil
 	  ranger-excluded-extensions (list "mp4" "mkv" "gp3" "ogv" "iso" "mp3")))
 #+end_src
-** Yaml configuration
-Add Yaml mode as it's necessary to modify yaml files in kubernetes
-#+begin_src emacs-lisp
-  (use-package yaml-mode
-    :ensure t
-    :mode (rx ".yaml" string-end))
-#+end_src
 ** Docker file configuration
 Add docker file mode to be able to easily read and edit dockerfiles
 #+begin_src emacs-lisp
@@ -624,7 +616,8 @@ configuration.
            ((rx ".cjs" string-end) . typescript-ts-mode)
            ((rx ".ts" string-end)  . typescript-ts-mode)
            ((rx ".jsx" string-end) . tsx-ts-mode)
-           ((rx ".json" string-end) .  json-ts-mode))
+           ((rx ".json" string-end) .  json-ts-mode)
+  	 ((rx ".yaml" string-end) . yaml-ts-mode))
     :preface
     (defun cfg/install-tree-grammars ()
       "Install tree sitter grammars if they are absent"
@@ -633,7 +626,8 @@ configuration.
   	     '((javascript . ("https://github.com/tree-sitter/tree-sitter-javascript" "v0.25.0" "src"))
   	       (tsx . ("https://github.com/tree-sitter/tree-sitter-typescript" "v0.23.2" "tsx/src"))
                  (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" "v0.23.2" "typescript/src"))
-  	       (json . ("https://github.com/tree-sitter/tree-sitter-json" "v0.24.8" "src"))))
+  	       (json . ("https://github.com/tree-sitter/tree-sitter-json" "v0.24.8" "src"))
+  	       (yaml . ("https://github.com/tree-sitter-grammars/tree-sitter-yaml" "v0.7.2" "src"))))
       (add-to-list 'treesit-language-source-alist grammar)
       ;; I have to think if there is a better way to do this, unclear what happens if the grammar version is upgraded
       (unless (treesit-language-available-p (car grammar))
