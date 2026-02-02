@@ -22,7 +22,6 @@
 - [[#web-configuration][Web configuration]]
   - [[#web-mode-configuration][web-mode configuration]]
   - [[#js2-mode-configuration][js2-mode configuration]]
-  - [[#json-mode-configuration][json-mode configuration]]
 - [[#package-configurations][Package configurations]]
   - [[#markdown-configuration][Markdown configuration]]
   - [[#rainbow-delimiters][Rainbow delimiters]]
@@ -225,13 +224,6 @@ Ensure js2-mode is installed and enable it for javascript files.
   (use-package js2-mode
     :ensure t
     :mode (rx ".js" string-end))
-#+end_src
-** json-mode configuration
-Ensure ~json-mode~ is installed, lazy load it for json files.
-#+begin_src emacs-lisp
-  (use-package json-mode
-    :ensure t
-    :mode (rx ".json" string-end))
 #+end_src
 * Package configurations
 ** Markdown configuration
