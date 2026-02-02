@@ -70,6 +70,7 @@
   - [[#configuration-languages][Configuration languages]]
     - [[#toml-mode][TOML mode]]
     - [[#yaml-mode][YAML mode]]
+    - [[#json-mode][JSON mode]]
 - [[#tree-sitter-configuration][Tree sitter configuration]]
 - [[#usability-configuration][Usability configuration]]
   - [[#clear-screen][Clear screen]]
@@ -608,6 +609,12 @@ Ensure ~racket-mode~ is installed and autoload it for .rkt files.
     :mode ((rx ".yaml" string-end) . yaml-ts-mode)
     :config (cfg/install-tree-grammar "yaml" '("https://github.com/tree-sitter-grammars/tree-sitter-yaml")))
 #+end_src
+*** JSON mode
+#+begin_src emacs-lisp
+  (use-package json-ts-mode
+    :mode ((rx ".json" string-end) . json-ts-mode)
+    :config (cfg/install-tree-grammar "json" '("https://github.com/tree-sitter/tree-sitter-json")))
+#+end_src
 * Tree sitter configuration
 As of now an experimental configuration to integrate tree-sitter to the
 configuration.
@@ -619,8 +626,7 @@ configuration.
            ((rx ".mts" string-end) . typescript-ts-mode)
            ((rx ".cjs" string-end) . typescript-ts-mode)
            ((rx ".ts" string-end)  . typescript-ts-mode)
-           ((rx ".jsx" string-end) . tsx-ts-mode)
-           ((rx ".json" string-end) .  json-ts-mode))
+           ((rx ".jsx" string-end) . tsx-ts-mode))
     :preface
     (defun cfg/install-tree-grammars ()
       "Install tree sitter grammars if they are absent"
@@ -628,8 +634,7 @@ configuration.
       (dolist (grammar
   	     '((javascript . ("https://github.com/tree-sitter/tree-sitter-javascript"))
   	       (tsx . ("https://github.com/tree-sitter/tree-sitter-typescript" "v0.23.2" "tsx/src"))
-                 (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" "v0.23.2" "typescript/src"))
-  	       (json . ("https://github.com/tree-sitter/tree-sitter-json"))))
+                 (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" "v0.23.2" "typescript/src"))))
       (add-to-list 'treesit-language-source-alist grammar)
       ;; I have to think if there is a better way to do this, unclear what happens if the grammar version is upgraded
       (unless (treesit-language-available-p (car grammar))
