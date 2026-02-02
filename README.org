@@ -58,6 +58,7 @@
   - [[#vterm-configuration][Vterm configuration]]
   - [[#ripgrep-configuration][Ripgrep configuration]]
 - [[#programming-languages][Programming languages]]
+  - [[#treesit-grammar][Treesit grammar]]
   - [[#haskell-configuration][Haskell configuration]]
   - [[#rust-configuration][Rust configuration]]
   - [[#go-configuration][Go configuration]]
@@ -66,6 +67,9 @@
     - [[#paredit-configuration][Paredit configuration]]
     - [[#racket-configuration][Racket configuration]]
   - [[#cmake-configuration][CMake configuration]]
+  - [[#configuration-languages][Configuration languages]]
+    - [[#toml-mode][TOML mode]]
+    - [[#yaml-mode][YAML mode]]
 - [[#tree-sitter-configuration][Tree sitter configuration]]
 - [[#usability-configuration][Usability configuration]]
   - [[#clear-screen][Clear screen]]
@@ -531,6 +535,14 @@ I like ripgrep
     :ensure t)
 #+end_src
 * Programming languages
+** Treesit grammar
+Function used to register a grammar to be used by treesitter based modes
+#+begin_src emacs-lisp
+  (defun cfg/install-tree-grammar (lang grammar-config)
+    (add-to-list 'treesit-install-language-grammar (lang . grammar-config))
+    (unless (treesit-language-available-p lang)
+      (treesit-install-language-grammar lang)))
+#+end_src
 ** Haskell configuration
 Ensure ~haskell-mode~ is installed and lazy load for ~.hs~ files. Enable buffer
 stylizing on save.
@@ -583,6 +595,19 @@ Ensure ~racket-mode~ is installed and autoload it for .rkt files.
     :ensure t
     :mode ((rx "CMakeLists.txt" string-end) . cmake-mode))
 #+end_src
+** Configuration languages
+*** TOML mode
+#+begin_src emacs-lisp
+  (use-package toml-ts-mode
+    :mode ((rx ".toml" string-end) . toml-ts-mode)
+    :config (cfg/install-tree-grammar "toml" '("https://github.com/tree-sitter/tree-sitter-toml")))
+#+end_src
+*** YAML mode
+#+begin_src emacs-lisp
+  (use-package yaml-ts-mode
+    :mode ((rx ".yaml" string-end) . yaml-ts-mode)
+    :config (cfg/install-tree-grammar "yaml" '("https://github.com/tree-sitter-grammars/tree-sitter-yaml")))
+#+end_src
 * Tree sitter configuration
 As of now an experimental configuration to integrate tree-sitter to the
 configuration.
@@ -595,9 +620,7 @@ configuration.
            ((rx ".cjs" string-end) . typescript-ts-mode)
            ((rx ".ts" string-end)  . typescript-ts-mode)
            ((rx ".jsx" string-end) . tsx-ts-mode)
-           ((rx ".json" string-end) .  json-ts-mode)
-  	 ((rx ".yaml" string-end) . yaml-ts-mode)
-  	 ((rx ".toml" string-end) . toml-ts-mode))
+           ((rx ".json" string-end) .  json-ts-mode))
     :preface
     (defun cfg/install-tree-grammars ()
       "Install tree sitter grammars if they are absent"
@@ -606,9 +629,7 @@ configuration.
   	     '((javascript . ("https://github.com/tree-sitter/tree-sitter-javascript"))
   	       (tsx . ("https://github.com/tree-sitter/tree-sitter-typescript" "v0.23.2" "tsx/src"))
                  (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" "v0.23.2" "typescript/src"))
-  	       (json . ("https://github.com/tree-sitter/tree-sitter-json"))
-  	       (toml . "https://github.com/tree-sitter/tree-sitter-toml")
-  	       (yaml . ("https://github.com/tree-sitter-grammars/tree-sitter-yaml"))))
+  	       (json . ("https://github.com/tree-sitter/tree-sitter-json"))))
       (add-to-list 'treesit-language-source-alist grammar)
       ;; I have to think if there is a better way to do this, unclear what happens if the grammar version is upgraded
       (unless (treesit-language-available-p (car grammar))
