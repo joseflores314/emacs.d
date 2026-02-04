@@ -509,8 +509,10 @@ Add support for Bazel
   (use-package bazel
     :ensure t
     :commands (bazel-run bazel-test bazel-build)
-    :mode (((rx ".bzl" string-end) . bazel-mode)
-	   ((rx ".bazel" string-end) . bazel-mode)))
+    :mode
+    (((rx ".bzl" string-end) . bazel-mode)
+     ((rx ".bazel" string-end) . bazel-mode)
+     ((rx ".bazelrc" string-end) . bazel-mode)))
 #+end_src
 ** Terraform configuration
 Add support for Terraform
