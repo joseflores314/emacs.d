@@ -9,6 +9,9 @@
     - [[#require-packageel-before-continuing][Require package.el before continuing]]
     - [[#add-archives][Add archives]]
   - [[#custom-configuration][Custom configuration]]
+  - [[#use-package-installation][Use-package installation]]
+    - [[#conditionally-install-use-package][Conditionally install use-package]]
+    - [[#require-use-package][Require use-package]]
   - [[#require-packages][Require packages]]
   - [[#literate-configuration-file][Literate configuration file]]
 - [[#general-configuration][General configuration]]
@@ -132,6 +135,24 @@ for the first time.
   (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
   (when (file-exists-p custom-file)
     (load custom-file))
+#+end_src
+** Use-package installation
+~use-package~ is used throughout the config to lazily load and configure
+packages, as well as to ensure they are always installed.
+*** Conditionally install use-package
+The rest of the configuration will not work if ~use-package~ is not available,
+the next piece of code ensures it's present.
+#+begin_src emacs-lisp
+  (unless (package-installed-p 'use-package)
+    (package-refresh-contents)
+    (package-install 'use-package))
+#+end_src
+*** Require use-package
+~use-package~ is used to manage package loading and bootstrap the config. It's
+used extensively throughout the config, require it.
+#+begin_src emacs-lisp
+  (eval-when-compile
+    (require 'use-package))
 #+end_src
 ** Require packages
 This section is for packages that for some reason can't/won't be configured by
