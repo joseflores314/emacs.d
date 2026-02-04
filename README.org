@@ -24,7 +24,6 @@
   - [[#ivy-integration][Ivy integration]]
 - [[#web-configuration][Web configuration]]
   - [[#web-mode-configuration][web-mode configuration]]
-  - [[#js2-mode-configuration][js2-mode configuration]]
 - [[#package-configurations][Package configurations]]
   - [[#markdown-configuration][Markdown configuration]]
   - [[#rainbow-delimiters][Rainbow delimiters]]
@@ -238,13 +237,6 @@ Ensure web-mode is installed and enable it for html files.
   (use-package web-mode
     :ensure t
     :mode (rx ".htm" (opt "l") string-end))
-#+end_src
-** js2-mode configuration
-Ensure js2-mode is installed and enable it for javascript files.
-#+begin_src emacs-lisp
-  (use-package js2-mode
-    :ensure t
-    :mode (rx ".js" string-end))
 #+end_src
 * Package configurations
 ** Markdown configuration
