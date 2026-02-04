@@ -61,6 +61,7 @@
   - [[#haskell-configuration][Haskell configuration]]
   - [[#rust-configuration][Rust configuration]]
   - [[#go-configuration][Go configuration]]
+  - [[#typescript-configuration][Typescript configuration]]
   - [[#protobuf-configuration][Protobuf configuration]]
   - [[#lisp-editing-configuration][Lisp editing configuration]]
     - [[#paredit-configuration][Paredit configuration]]
@@ -560,6 +561,20 @@ Ensure ~go-mode~ is available for files ending with ~.go~.
     :ensure t
     :mode ((rx ".go" string-end) . go-mode))
 #+end_src
+** Typescript configuration
+Configure typescript using treesitter
+#+begin_src emacs-lisp
+  (use-package typescript-ts-mode
+    :mode
+    ((rx ".js" string-end) . typescript-ts-mode)
+    ((rx ".mjs" string-end) . typescript-ts-mode)
+    ((rx ".mts" string-end) . typescript-ts-mode)
+    ((rx ".cjs" string-end) . typescript-ts-mode)
+    ((rx ".ts" string-end) . typescript-ts-mode)
+    :preface
+    (cfg/install-tree-grammar 'javascript '("https://github.com/tree-sitter/tree-sitter-javascript"))
+    (cfg/install-tree-grammar 'typescript '("https://github.com/tree-sitter/tree-sitter-typescript" "v0.23.2" "typescript/src")))
+#+end_src
 ** Protobuf configuration
 Ensure ~protobuf-mode~ is available for files ending wigth ~.proto~.
 #+begin_src emacs-lisp
@@ -618,20 +633,13 @@ configuration.
 #+begin_src emacs-lisp
   (use-package treesit
     :mode (((rx ".tsx" string-end) . tsx-ts-mode)
-           ((rx ".js" string-end) . typescript-ts-mode)
-           ((rx ".mjs" string-end) . typescript-ts-mode)
-           ((rx ".mts" string-end) . typescript-ts-mode)
-           ((rx ".cjs" string-end) . typescript-ts-mode)
-           ((rx ".ts" string-end)  . typescript-ts-mode)
            ((rx ".jsx" string-end) . tsx-ts-mode))
     :preface
     (defun cfg/install-tree-grammars ()
       "Install tree sitter grammars if they are absent"
       (interactive)
       (dolist (grammar
-  	     '((javascript . ("https://github.com/tree-sitter/tree-sitter-javascript"))
-  	       (tsx . ("https://github.com/tree-sitter/tree-sitter-typescript" "v0.23.2" "tsx/src"))
-                 (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" "v0.23.2" "typescript/src"))))
+  	     '((tsx . ("https://github.com/tree-sitter/tree-sitter-typescript" "v0.23.2" "tsx/src"))))
       (add-to-list 'treesit-language-source-alist grammar)
       ;; I have to think if there is a better way to do this, unclear what happens if the grammar version is upgraded
       (unless (treesit-language-available-p (car grammar))
