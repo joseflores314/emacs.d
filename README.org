@@ -71,7 +71,6 @@
     - [[#toml-mode][TOML mode]]
     - [[#yaml-mode][YAML mode]]
     - [[#json-mode][JSON mode]]
-- [[#tree-sitter-configuration][Tree sitter configuration]]
 - [[#usability-configuration][Usability configuration]]
   - [[#clear-screen][Clear screen]]
   - [[#avy-configuration][Avy configuration]]
@@ -626,25 +625,6 @@ Ensure ~racket-mode~ is installed and autoload it for .rkt files.
     (cfg/install-tree-grammar 'json '("https://github.com/tree-sitter/tree-sitter-json"))
     (add-to-list 'major-mode-remap-alist '(json-mode . json-ts-mode))
     (add-to-list 'major-mode-remap-alist '(js-json-mode . json-ts-mode)))
-#+end_src
-* Tree sitter configuration
-As of now an experimental configuration to integrate tree-sitter to the
-configuration.
-#+begin_src emacs-lisp
-  (use-package treesit
-    :mode (((rx ".tsx" string-end) . tsx-ts-mode)
-           ((rx ".jsx" string-end) . tsx-ts-mode))
-    :preface
-    (defun cfg/install-tree-grammars ()
-      "Install tree sitter grammars if they are absent"
-      (interactive)
-      (dolist (grammar
-  	     '((tsx . ("https://github.com/tree-sitter/tree-sitter-typescript" "v0.23.2" "tsx/src"))))
-      (add-to-list 'treesit-language-source-alist grammar)
-      ;; I have to think if there is a better way to do this, unclear what happens if the grammar version is upgraded
-      (unless (treesit-language-available-p (car grammar))
-              (treesit-install-language-grammar (car grammar)))))
-      :config (cfg/install-tree-grammars))
 #+end_src
 * Usability configuration
 ** Clear screen
